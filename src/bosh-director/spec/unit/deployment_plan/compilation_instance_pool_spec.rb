@@ -273,8 +273,22 @@ module Bosh::Director
 
         let(:availability_zone) { DeploymentPlan::AvailabilityZone.new('foo-az', cloud_properties) }
 
+<<<<<<< HEAD
         let(:deployment_model) { Models::Deployment.make(name: 'mycloud', cloud_config: cloud_config) }
         let(:cloud_config) { Models::CloudConfig.make(raw_manifest: Bosh::Spec::Deployments.simple_cloud_config.merge('azs' => [{'name' => 'foo-az'}])) }
+||||||| parent of eee686c9c... User can fetch/update/diff cloud config via generic api
+        let(:deployment_model) { Models::Deployment.make(name: 'mycloud', cloud_config: cloud_config) }
+        let(:cloud_config) { Models::CloudConfig.make(raw_manifest: Bosh::Spec::Deployments.simple_cloud_config.merge('azs' => [{'name' => 'foo-az'}])) }
+        let(:dns_encoder) { LocalDnsEncoderManager.new_encoder_with_updated_index([availability_zone]) }
+=======
+        let(:deployment_model) {
+          deployment = Models::Deployment.make(name: 'mycloud')
+          deployment.cloud_configs = [cloud_config]
+          deployment
+        }
+        let(:cloud_config) { Models::Config.make(:cloud, raw_manifest: Bosh::Spec::Deployments.simple_cloud_config.merge('azs' => [{'name' => 'foo-az'}])) }
+        let(:dns_encoder) { LocalDnsEncoderManager.new_encoder_with_updated_index([availability_zone]) }
+>>>>>>> eee686c9c... User can fetch/update/diff cloud config via generic api
         let(:vm_creator) { instance_double('Bosh::Director::VmCreator') }
 
         before do
